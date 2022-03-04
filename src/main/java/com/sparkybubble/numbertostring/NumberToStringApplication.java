@@ -3,13 +3,12 @@ package com.sparkybubble.numbertostring;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.util.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.stream.Stream;
+
 
 @SpringBootApplication
 public class NumberToStringApplication {
@@ -18,8 +17,28 @@ public class NumberToStringApplication {
 //		SpringApplication.run(NumberToStringApplication.class, args);
 		display();
 	}
+
 	public static void display() throws IOException {
 		List<String> data = readIntoFile();
+		String[][] array = sortArray(data);
+
+		String[][] filteredArr = Arrays.stream(array)
+						.map(row->Arrays.stream(row)
+								.filter(Objects::nonNull)
+								.toArray(String[]::new))
+						.toArray(String[][]::new);
+
+		Stream.of(filteredArr)
+				.map(s -> String.join(" \t", s))
+				.forEach(System.out::println);
+	}
+
+	public static List<String> readIntoFile() throws IOException {
+		List<String> data = Files.readAllLines(Paths.get("src/main/resources/nums.txt"));
+		return data;
+	}
+
+	public static String[][] sortArray(List<String> data){
 		int numOfCols = data.size() <= 8 ? 2 : 3;
 		int numOfRows = numOfCols == 2 ? 4 : 9;
 		String[][] array = new String[numOfRows][numOfCols];
@@ -77,23 +96,6 @@ public class NumberToStringApplication {
 			}
 			System.out.println(data);
 		}
-
-		for(int i = 0; i < array.length; i++){
-			for(int j = 0; j < array[i].length; j++){
-				System.out.print(array[i][j] + "\t\t\t");
-			}
-			System.out.println();
-		}
-
-//		for (int i = 0; i < array.length; i++) {
-//			for(int j = 0; j < array[i].length;j++) {
-//				System.out.print(array[i][j] + "\t");
-//			}
-//			System.out.println();
-//		}
-	}
-	public static List<String> readIntoFile() throws IOException {
-		List<String> data = Files.readAllLines(Paths.get("src/main/resources/nums.txt"));
-		return data;
+		return array;
 	}
 }
