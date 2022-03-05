@@ -1,13 +1,11 @@
 package com.sparkybubble.numbertostring;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import static com.sparkybubble.numbertostring.NumberToStringApplication.readIntoFile;
 import static com.sparkybubble.numbertostring.NumberToStringApplication.sortArray;
 import static org.junit.jupiter.api.Assertions.*;
@@ -64,6 +62,15 @@ class NumberToStringApplicationTest {
 
         /*Check to make sure the array is 2 columns.*/
         assertTrue(arr[0].length == 2);
+
+        /*Testing the IndexOutOfBounds Exception*/
+        try {
+            List<String> list = new ArrayList<>();
+            String [][] array = sortArray(list);
+            fail("Didn't throw exception");
+        } catch (Exception e) {
+            assertTrue(e instanceof IndexOutOfBoundsException);
+        }
 
     }
 }
