@@ -1,6 +1,7 @@
 package com.sparkybubble.numbertostring;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import java.io.File;
 import java.io.IOException;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.sparkybubble.numbertostring.NumberToStringApplication.readIntoFile;
+import static com.sparkybubble.numbertostring.NumberToStringApplication.sortArray;
 import static org.junit.jupiter.api.Assertions.*;
 
 class NumberToStringApplicationTest {
@@ -52,12 +54,16 @@ class NumberToStringApplicationTest {
         readIntoFile().add("eight");
         assertFalse(readIntoFile().size() == 8);
 
-
     }
 
     @Test
-    void testSortArray() {
-        String [][] array;
+    void testSortArray() throws IOException, IndexOutOfBoundsException {
+        String [][] arr = sortArray(readIntoFile());
+        /*Check to see make sure the length of the array is 4.*/
+        assertEquals(4, arr.length);
+
+        /*Check to make sure the array is 2 columns.*/
+        assertTrue(arr[0].length == 2);
 
     }
 }
