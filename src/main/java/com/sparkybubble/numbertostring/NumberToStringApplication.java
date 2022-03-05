@@ -18,6 +18,11 @@ public class NumberToStringApplication {
 		display();
 	}
 
+	/**
+	 * Called in the main method, displays the data in file to the console.
+	 *
+	 * @throws IOException if the input or output stream of data has an error.
+	 */
 	public static void display() throws IOException {
 		List<String> data = readIntoFile();
 		String[][] array = sortArray(data);
@@ -33,11 +38,24 @@ public class NumberToStringApplication {
 				.forEach(System.out::println);
 	}
 
+	/**
+	 *
+	 * @return Reads all lines from file and puts it into a List<>, then returns
+	 * the list.
+	 *
+	 * @throws IOException if when the input stream data from file error occurs.
+	 */
 	public static List<String> readIntoFile() throws IOException {
 		List<String> data = Files.readAllLines(Paths.get("src/main/resources/nums.txt"));
 		return data;
 	}
 
+	/**
+	 *
+	 * @param data list<> datastructure is passed in.
+	 *
+	 * @return Turns the list that was passed in into a 2D array that is returned.
+	 */
 	public static String[][] sortArray(List<String> data){
 		int numOfCols = data.size() <= 8 ? 2 : 3;
 		int numOfRows = numOfCols == 2 ? 4 : 9;
